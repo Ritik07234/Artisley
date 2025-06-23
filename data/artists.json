@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Aarav Mehra",
+    "category": "Singer",
+    "priceRange": "₹10,000 - ₹20,000",
+    "location": "Mumbai",
+    "languages": ["Hindi", "English"]
+  },
+  {
+    "id": 2,
+    "name": "Ishita Roy",
+    "category": "Dancer",
+    "priceRange": "₹8,000 - ₹15,000",
+    "location": "Delhi",
+    "languages": ["Hindi"]
+  }
+]
