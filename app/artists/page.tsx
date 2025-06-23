@@ -8,32 +8,17 @@ import FilterBlock from '@/components/FilterBlock';
 import { Artist } from '@/types';
 import { useShortlist } from '@/context/ShortlistContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useArtists } from '@/context/ArtistsContext';
 
 export default function ArtistListingPage() {
-  const [artists, setArtists] = useState<Artist[]>([]);
-  const [filteredArtists, setFilteredArtists] = useState<Artist[]>([]);
+  const { artists } = useArtists();
+  const [filteredArtists, setFilteredArtists] = useState<Artist[]>(artists);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [showShortlist, setShowShortlist] = useState(false);
   const { shortlist } = useShortlist();
-
-  // Mock API fetch
-  useEffect(() => {
-    setLoading(true);
-    fetch('/api/artists')
-      .then((res) => res.json())
-      .then((data) => {
-        setArtists(data);
-        setFilteredArtists(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.error('Failed to fetch artists:', err);
-      });
-  }, []);
 
   // Filtering logic
   useEffect(() => {
@@ -57,7 +42,18 @@ export default function ArtistListingPage() {
       result = result.filter((a) => shortlist.includes(a.id));
     }
 
+    // Always show at least the first three artists if no filters are applied
+    if (
+      selectedCategory.length === 0 &&
+      selectedLocation.length === 0 &&
+      selectedPrice.length === 0 &&
+      !showShortlist
+    ) {
+      result = artists.slice(0, 3).concat(artists.slice(3));
+    }
+
     setFilteredArtists(result);
+    setLoading(false);
   }, [selectedCategory, selectedLocation, selectedPrice, artists, shortlist, showShortlist]);
 
   // Filter handler
@@ -86,54 +82,52 @@ export default function ArtistListingPage() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Explore Artists</h1>
-
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-          <div className="flex gap-2">
+      <main className="max-w-7xl mx-auto px-4 py-8 flex">
+        {/* Filter Sidebar */}
+        <aside className="space-y-4 w-full md:w-64 flex-shrink-0 md:sticky md:top-24 h-fit">
+          <FilterBlock
+            title="Category"
+            options={['Singer', 'Dancer', 'Speaker', 'DJ']}
+            selected={selectedCategory}
+            onChange={(val) => toggleFilter(val, 'category')}
+          />
+          <FilterBlock
+            title="Location"
+            options={['Mumbai', 'Delhi', 'Bangalore']}
+            selected={selectedLocation}
+            onChange={(val) => toggleFilter(val, 'location')}
+          />
+          <FilterBlock
+            title="Price Range"
+            options={['₹5,000', '₹10,000', '₹20,000']}
+            selected={selectedPrice}
+            onChange={(val) => toggleFilter(val, 'price')}
+          />
+          <div className="flex gap-2 mt-4">
             <button
               onClick={clearFilters}
-              className="px-4 py-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-primary hover:text-white dark:hover:bg-yellow-400 dark:hover:text-black transition-all"
+              className="px-4 py-1 rounded-full border border-gray-200 bg-gray-100 text-gray-700 font-semibold transition-all duration-200 hover:border-black focus:border-black focus:outline-none focus:ring-2 focus:ring-primary"
             >
               Clear Filters
             </button>
             <button
               onClick={() => setShowShortlist((v) => !v)}
-              className={`px-4 py-1 rounded border transition-all ${showShortlist ? 'bg-primary text-white dark:bg-yellow-400 dark:text-black border-primary dark:border-yellow-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-700'}`}
+              className={`px-4 py-1 rounded-full border font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary
+                ${showShortlist
+                  ? 'bg-white text-black border-black font-bold hover:border-black focus:border-black'
+                  : 'bg-gray-100 text-gray-700 border-gray-200 hover:border-black focus:border-black'}
+              `}
             >
               {showShortlist ? 'Showing Favorites' : 'Show Favorites'}
             </button>
           </div>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Filter Sidebar */}
-          <aside className="space-y-4">
-            <FilterBlock
-              title="Category"
-              options={['Singer', 'Dancer', 'Speaker', 'DJ']}
-              selected={selectedCategory}
-              onChange={(val) => toggleFilter(val, 'category')}
-            />
-            <FilterBlock
-              title="Location"
-              options={['Mumbai', 'Delhi', 'Bangalore']}
-              selected={selectedLocation}
-              onChange={(val) => toggleFilter(val, 'location')}
-            />
-            <FilterBlock
-              title="Price Range"
-              options={['₹5,000', '₹10,000', '₹20,000']}
-              selected={selectedPrice}
-              onChange={(val) => toggleFilter(val, 'price')}
-            />
-          </aside>
-
-          {/* Artist Cards */}
-          <section className="md:col-span-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        </aside>
+        {/* Artist Cards Section */}
+        <section className="flex-1 overflow-y-auto max-h-[calc(100vh-120px)] pl-0 md:pl-8">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {loading ? (
               Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[300px] w-full max-w-xs mx-auto" />
+                <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[220px] w-full max-w-xs mx-auto" />
               ))
             ) : filteredArtists.length > 0 ? (
               <AnimatePresence>
@@ -145,15 +139,15 @@ export default function ArtistListingPage() {
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ArtistCard artist={artist} />
+                    <ArtistCard artist={artist} small />
                   </motion.div>
                 ))}
               </AnimatePresence>
             ) : (
               <p>No artists found matching your filters.</p>
             )}
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </motion.div>

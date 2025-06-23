@@ -4,18 +4,10 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DashboardTable from '@/components/DashboardTable';
 import { Artist } from '@/types';
-import { useEffect, useState } from 'react';
+import { useArtists } from '@/context/ArtistsContext';
 
 export default function DashboardPage() {
-  const [artists, setArtists] = useState<Artist[]>([]);
-
-  // fetch from mock API
-  useEffect(() => {
-    fetch('/api/artists')
-      .then((res) => res.json())
-      .then((data) => setArtists(data))
-      .catch((err) => console.error('Error fetching artist data:', err));
-  }, []);
+  const { artists } = useArtists();
 
   return (
     <>

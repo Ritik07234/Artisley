@@ -50,7 +50,7 @@ export default function HomePage() {
               <img
                 src={category.img}
                 alt={category.alt}
-                className="mx-auto mb-2 w-full h-24 object-cover border border-gray-200 dark:border-gray-700"
+                className="mx-auto mb-2 w-full h-24 object-cover object-top border border-gray-200 dark:border-gray-700 rounded-full"
                 height={96}
                 width={96}
                 loading="lazy"

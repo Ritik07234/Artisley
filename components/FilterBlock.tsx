@@ -21,10 +21,10 @@ export default function FilterBlock({
           <button
             key={option}
             onClick={() => onChange(option)}
-            className={`px-3 py-1 rounded-full text-sm border transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary
+            className={`px-3 py-1 rounded-full text-sm border font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary
               ${selected.includes(option)
-                ? 'bg-primary text-white dark:bg-yellow-400 dark:text-black border-primary dark:border-yellow-400 ring-2 ring-primary dark:ring-yellow-400'
-                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-700'}
+                ? 'bg-white text-black border-black font-bold dark:bg-yellow-400 dark:text-black dark:border-yellow-400 ring-2 ring-primary dark:ring-yellow-400'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-white border-gray-200 dark:border-gray-600 hover:text-primary dark:hover:text-yellow-300'}
             `}
           >
             {option}

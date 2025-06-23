@@ -13,13 +13,14 @@ export default function OnboardPage() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Navbar />
-      <main className="max-w-3xl mx-auto px-4 py-10">
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Onboard a New Artist
-        </h1>
-        <ArtistForm onSuccess={() => setShowSuccess(true)} />
+      <main className="min-h-[80vh] flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950 py-10 px-2">
+        <div className="w-full max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold mb-2 text-center text-primary dark:text-yellow-300">Onboard a New Artist</h1>
+          <p className="text-center text-gray-600 dark:text-gray-300 mb-8">Fill out the form below to add a new artist to the platform.</p>
+          <ArtistForm onSuccess={() => setShowSuccess(true)} />
+        </div>
         <AnimatePresence>
           {showSuccess && (
             <motion.div
