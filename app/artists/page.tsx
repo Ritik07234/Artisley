@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ArtistCard from '@/components/ArtistCard';
+const ArtistCard = lazy(() => import('@/components/ArtistCard'));
 import FilterBlock from '@/components/FilterBlock';
 import { Artist } from '@/types';
 import { useShortlist } from '@/context/ShortlistContext';
@@ -80,12 +80,12 @@ export default function ArtistListingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-800">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col">
         <Navbar />
         <main className="pt-20 flex-1 flex flex-col lg:flex-row">
           {/* Filter Sidebar */}
-          <aside className="w-full lg:w-80 lg:fixed lg:top-20 lg:left-0 lg:h-[calc(100vh-80px)] lg:overflow-y-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm lg:border-r lg:border-gray-200 dark:lg:border-gray-700 p-4 lg:p-6 z-20">
+          <aside className="w-full lg:w-80 lg:fixed lg:top-20 lg:left-0 lg:h-[calc(100vh-80px)] lg:overflow-y-auto bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm lg:border-r lg:border-gray-200 dark:lg:border-gray-600 p-4 lg:p-6 z-20">
             <div className="space-y-6">
               <FilterBlock
                 title="Category"
@@ -108,7 +108,7 @@ export default function ArtistListingPage() {
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={clearFilters}
-                  className="px-4 py-2 rounded-full border border-gray-200 bg-gray-100 text-gray-700 font-semibold transition-all duration-200 hover:border-black focus:outline-none"
+                  className="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-white font-semibold transition-all duration-200 hover:border-black dark:hover:border-white focus:outline-none"
                 >
                   Clear Filters
                 </button>
@@ -116,8 +116,8 @@ export default function ArtistListingPage() {
                   onClick={() => setShowShortlist((v) => !v)}
                   className={`px-4 py-2 rounded-full border font-semibold transition-all duration-200 focus:outline-none
                     ${showShortlist
-                      ? 'bg-white text-black border-black font-bold hover:border-black'
-                      : 'bg-gray-100 text-gray-700 border-gray-200 hover:border-black'}
+                      ? 'bg-white dark:bg-gray-600 text-black dark:text-white border-black dark:border-white font-bold hover:border-black dark:hover:border-white'
+                      : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-white border-gray-200 dark:border-gray-600 hover:border-black dark:hover:border-white'}
                   `}
                 >
                   {showShortlist ? 'Showing Favorites' : 'Show Favorites'}
@@ -133,26 +133,28 @@ export default function ArtistListingPage() {
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-2">
                 {loading ? (
                   Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0" />
+                    <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-600 rounded-xl h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0" />
                   ))
                 ) : filteredArtists.length > 0 ? (
                   <AnimatePresence>
-                    {filteredArtists.map((artist) => (
-                      <motion.div
-                        key={artist.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
-                        className="h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0"
-                      >
-                        <ArtistCard artist={artist} small />
-                      </motion.div>
-                    ))}
+                    <Suspense fallback={<div className="w-[260px] h-[320px] flex items-center justify-center bg-gray-100 dark:bg-gray-600 rounded-xl text-gray-600 dark:text-white">Loading...</div>}>
+                      {filteredArtists.map((artist) => (
+                        <motion.div
+                          key={artist.id}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.3 }}
+                          className="h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0"
+                        >
+                          <ArtistCard artist={artist} small />
+                        </motion.div>
+                      ))}
+                    </Suspense>
                   </AnimatePresence>
                 ) : (
                   <div className="w-full text-center py-8">
-                    <p className="text-gray-500 dark:text-gray-400">No artists found matching your filters.</p>
+                    <p className="text-gray-500 dark:text-white">No artists found matching your filters.</p>
                   </div>
                 )}
               </div>
@@ -162,26 +164,28 @@ export default function ArtistListingPage() {
             <div className="hidden lg:grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[320px] w-full" />
+                  <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-600 rounded-xl h-[320px] w-full" />
                 ))
               ) : filteredArtists.length > 0 ? (
                 <AnimatePresence>
-                  {filteredArtists.map((artist) => (
-                    <motion.div
-                      key={artist.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full"
-                    >
-                      <ArtistCard artist={artist} small />
-                    </motion.div>
-                  ))}
+                  <Suspense fallback={<div className="w-full h-[320px] flex items-center justify-center bg-gray-100 dark:bg-gray-600 rounded-xl text-gray-600 dark:text-white">Loading...</div>}>
+                    {filteredArtists.map((artist) => (
+                      <motion.div
+                        key={artist.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-full"
+                      >
+                        <ArtistCard artist={artist} small />
+                      </motion.div>
+                    ))}
+                  </Suspense>
                 </AnimatePresence>
               ) : (
                 <div className="col-span-full text-center py-8">
-                  <p className="text-gray-500 dark:text-gray-400">No artists found matching your filters.</p>
+                  <p className="text-gray-500 dark:text-white">No artists found matching your filters.</p>
                 </div>
               )}
             </div>

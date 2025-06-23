@@ -9,7 +9,7 @@ interface ArtistCardProps {
   small?: boolean;
 }
 
-export default function ArtistCard({ artist, small }: ArtistCardProps) {
+const ArtistCard = ({ artist, small }: ArtistCardProps) => {
   const { shortlist, toggleShortlist } = useShortlist();
   const isFavorited = shortlist.includes(artist.id);
   return (
@@ -41,4 +41,6 @@ export default function ArtistCard({ artist, small }: ArtistCardProps) {
       </div>
     </div>
   );
-}
+};
+
+export default ArtistCard;

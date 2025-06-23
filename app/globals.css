@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #3b82f6;
 }
 
 @theme inline {
@@ -32,3 +33,324 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Dark mode styles */
+.dark {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+.dark body {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Ensure all backgrounds are properly dark in dark mode */
+.dark .bg-white {
+  background-color: #1f2937;
+}
+
+.dark .bg-gray-50 {
+  background-color: #111827;
+}
+
+.dark .bg-gray-100 {
+  background-color: #374151;
+}
+
+.dark .bg-gray-200 {
+  background-color: #4b5563;
+}
+
+.dark .border-gray-200 {
+  border-color: #374151;
+}
+
+.dark .border-gray-300 {
+  border-color: #4b5563;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db;
+}
+
+.dark .text-gray-700 {
+  color: #e5e7eb;
+}
+
+.dark .text-gray-800 {
+  color: #f3f4f6;
+}
+
+/* Ensure text is white in dark mode */
+.dark .text-black {
+  color: #ffffff;
+}
+
+/* Ensure borders are visible in dark mode */
+.dark .border {
+  border-color: #374151;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Ensure proper contrast for form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #374151;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Ensure buttons are visible in dark mode */
+.dark button {
+  color: #f9fafb;
+}
+
+/* Ensure cards and containers are properly dark */
+.dark .shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure proper hover states in dark mode */
+.dark .hover\:bg-gray-100:hover {
+  background-color: #374151;
+}
+
+.dark .hover\:bg-gray-200:hover {
+  background-color: #4b5563;
+}
+
+/* Ensure proper focus states in dark mode */
+.dark .focus\:ring-primary:focus {
+  --tw-ring-color: #3b82f6;
+}
+
+/* Ensure proper backdrop blur in dark mode */
+.dark .backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  background-color: rgba(31, 41, 55, 0.8);
+}
+
+/* Dark mode styles - Force all text white and backgrounds gray */
+.dark {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+.dark body {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* Force all text to be white in dark mode */
+.dark * {
+  color: #ffffff !important;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6,
+.dark p,
+.dark span,
+.dark div,
+.dark label,
+.dark button,
+.dark input,
+.dark textarea,
+.dark select,
+.dark option,
+.dark li,
+.dark a {
+  color: #ffffff !important;
+}
+
+/* Force all backgrounds to be gray in dark mode */
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-blue-50,
+.dark .bg-indigo-100,
+.dark main,
+.dark section,
+.dark aside,
+.dark div {
+  background-color: #374151 !important;
+}
+
+/* Specific component backgrounds */
+.dark .bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #374151, #4b5563) !important;
+}
+
+.dark .bg-gradient-to-br.from-blue-50.to-indigo-100 {
+  background: linear-gradient(to bottom right, #374151, #4b5563) !important;
+}
+
+/* Force all borders to be visible */
+.dark .border,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-gray-400,
+.dark .border-gray-500,
+.dark .border-gray-600,
+.dark .border-gray-700,
+.dark .border-gray-800 {
+  border-color: #6b7280 !important;
+}
+
+/* Force all shadows to be visible */
+.dark .shadow,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force all hover states */
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-200:hover,
+.dark .hover\:bg-white:hover {
+  background-color: #4b5563 !important;
+}
+
+/* Force all focus states */
+.dark .focus\:ring-primary:focus {
+  --tw-ring-color: #3b82f6 !important;
+}
+
+/* Force all form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #4b5563 !important;
+  color: #ffffff !important;
+  border-color: #6b7280 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Force all buttons */
+.dark button {
+  color: #ffffff !important;
+}
+
+/* Force all links */
+.dark a {
+  color: #ffffff !important;
+}
+
+/* Force all cards and containers */
+.dark .bg-white\/80,
+.dark .bg-gray-900\/80 {
+  background-color: rgba(55, 65, 81, 0.8) !important;
+}
+
+/* Force all backdrop blur */
+.dark .backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  background-color: rgba(55, 65, 81, 0.8) !important;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Ensure proper contrast for all elements */
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: #ffffff !important;
+}
+
+/* Force all backgrounds to gray */
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-gray-300,
+.dark .bg-gray-400,
+.dark .bg-gray-500,
+.dark .bg-gray-600,
+.dark .bg-gray-700,
+.dark .bg-gray-800,
+.dark .bg-gray-900 {
+  background-color: #374151 !important;
+}
+
+/* Force all text colors to white */
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-gray-300,
+.dark .text-gray-200,
+.dark .text-gray-100 {
+  color: #ffffff !important;
+}
+
+/* Keep primary color visible */
+.dark .text-primary {
+  color: #3b82f6 !important;
+}
+
+/* Keep success/error colors visible */
+.dark .text-red-500 {
+  color: #ef4444 !important;
+}
+
+.dark .text-green-600 {
+  color: #16a34a !important;
+}
+
+.dark .text-yellow-400 {
+  color: #facc15 !important;
+}
