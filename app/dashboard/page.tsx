@@ -1,27 +1,50 @@
 'use client';
 
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DashboardTable from '@/components/DashboardTable';
-import { Artist } from '@/types';
+import { motion } from 'framer-motion';
 import { useArtists } from '@/context/ArtistsContext';
 
 export default function DashboardPage() {
   const { artists } = useArtists();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredArtists = artists.filter(artist =>
+    artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artist.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artist.location.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <>
-      <Navbar />
-      <main className="max-w-6xl mx-auto px-4 py-10">
-        <h1 className="text-2xl font-bold mb-6 text-center">Manager Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <Navbar />
+        <main className="pt-20 max-w-7xl mx-auto px-4 py-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2 text-primary">Artist Dashboard</h1>
+            <p className="text-gray-600 dark:text-gray-300">Manage and view all artists on the platform</p>
+          </div>
+          
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Search artists by name, category, or location..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full md:w-96 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
 
-        {artists.length > 0 ? (
-          <DashboardTable artists={artists} />
-        ) : (
-          <p className="text-center text-gray-500">No artist submissions found.</p>
-        )}
-      </main>
-      <Footer />
-    </>
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+            <div className="overflow-x-auto w-full">
+              <DashboardTable artists={filteredArtists} />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </motion.div>
+    </div>
   );
 }

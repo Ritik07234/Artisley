@@ -25,24 +25,24 @@ export default function DashboardTable({ artists }: Props) {
   }
 
   return (
-    <table className="min-w-full border">
+    <table className="min-w-full border min-w-[600px] text-sm md:text-base">
       <thead className="bg-gray-100 dark:bg-gray-800">
         <tr>
-          <th className="px-6 py-3 text-center font-semibold">Name</th>
-          <th className="px-6 py-3 text-center font-semibold">Category</th>
-          <th className="px-6 py-3 text-center font-semibold">City</th>
-          <th className="px-6 py-3 text-center font-semibold">Fee</th>
-          <th className="px-6 py-3 text-center font-semibold">Action</th>
+          <th className="px-2 md:px-6 py-2 md:py-3 text-center font-semibold">Name</th>
+          <th className="px-2 md:px-6 py-2 md:py-3 text-center font-semibold">Category</th>
+          <th className="px-2 md:px-6 py-2 md:py-3 text-center font-semibold">City</th>
+          <th className="px-2 md:px-6 py-2 md:py-3 text-center font-semibold">Fee</th>
+          <th className="px-2 md:px-6 py-2 md:py-3 text-center font-semibold">Action</th>
         </tr>
       </thead>
       <tbody>
         {rows.map((a, idx) => (
           <tr key={a.id} className={`border-t ${idx === 0 ? 'bg-white dark:bg-gray-900 dark:text-white' : 'bg-white dark:bg-gray-900 dark:text-white'}`}>
-            <td className="px-6 py-3 text-center align-middle">{a.name}</td>
-            <td className="px-6 py-3 text-center align-middle">{a.category}</td>
-            <td className="px-6 py-3 text-center align-middle">{a.location}</td>
-            <td className="px-6 py-3 text-center align-middle">{a.priceRange}</td>
-            <td className="px-6 py-3 text-center align-middle">
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.name}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.category}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.location}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.priceRange}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">
               <button className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">View</button>
               <button
                 className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 ml-2"

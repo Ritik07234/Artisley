@@ -80,76 +80,115 @@ export default function ArtistListingPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <Navbar />
-      <main className="max-w-7xl mx-auto px-4 py-8 flex">
-        {/* Filter Sidebar */}
-        <aside className="space-y-4 w-full md:w-64 flex-shrink-0 md:sticky md:top-24 h-fit">
-          <FilterBlock
-            title="Category"
-            options={['Singer', 'Dancer', 'Speaker', 'DJ']}
-            selected={selectedCategory}
-            onChange={(val) => toggleFilter(val, 'category')}
-          />
-          <FilterBlock
-            title="Location"
-            options={['Mumbai', 'Delhi', 'Bangalore']}
-            selected={selectedLocation}
-            onChange={(val) => toggleFilter(val, 'location')}
-          />
-          <FilterBlock
-            title="Price Range"
-            options={['₹5,000', '₹10,000', '₹20,000']}
-            selected={selectedPrice}
-            onChange={(val) => toggleFilter(val, 'price')}
-          />
-          <div className="flex gap-2 mt-4">
-            <button
-              onClick={clearFilters}
-              className="px-4 py-1 rounded-full border border-gray-200 bg-gray-100 text-gray-700 font-semibold transition-all duration-200 hover:border-black focus:border-black focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              Clear Filters
-            </button>
-            <button
-              onClick={() => setShowShortlist((v) => !v)}
-              className={`px-4 py-1 rounded-full border font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary
-                ${showShortlist
-                  ? 'bg-white text-black border-black font-bold hover:border-black focus:border-black'
-                  : 'bg-gray-100 text-gray-700 border-gray-200 hover:border-black focus:border-black'}
-              `}
-            >
-              {showShortlist ? 'Showing Favorites' : 'Show Favorites'}
-            </button>
-          </div>
-        </aside>
-        {/* Artist Cards Section */}
-        <section className="flex-1 overflow-y-auto max-h-[calc(100vh-120px)] pl-0 md:pl-8">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {loading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[220px] w-full max-w-xs mx-auto" />
-              ))
-            ) : filteredArtists.length > 0 ? (
-              <AnimatePresence>
-                {filteredArtists.map((artist) => (
-                  <motion.div
-                    key={artist.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ArtistCard artist={artist} small />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            ) : (
-              <p>No artists found matching your filters.</p>
-            )}
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </motion.div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col">
+        <Navbar />
+        <main className="pt-20 flex-1 flex flex-col lg:flex-row">
+          {/* Filter Sidebar */}
+          <aside className="w-full lg:w-80 lg:fixed lg:top-20 lg:left-0 lg:h-[calc(100vh-80px)] lg:overflow-y-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm lg:border-r lg:border-gray-200 dark:lg:border-gray-700 p-4 lg:p-6 z-20">
+            <div className="space-y-6">
+              <FilterBlock
+                title="Category"
+                options={['Singer', 'Dancer', 'Speaker', 'DJ']}
+                selected={selectedCategory}
+                onChange={(val) => toggleFilter(val, 'category')}
+              />
+              <FilterBlock
+                title="Location"
+                options={['Mumbai', 'Delhi', 'Bangalore']}
+                selected={selectedLocation}
+                onChange={(val) => toggleFilter(val, 'location')}
+              />
+              <FilterBlock
+                title="Price Range"
+                options={['₹5,000', '₹10,000', '₹20,000']}
+                selected={selectedPrice}
+                onChange={(val) => toggleFilter(val, 'price')}
+              />
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={clearFilters}
+                  className="px-4 py-2 rounded-full border border-gray-200 bg-gray-100 text-gray-700 font-semibold transition-all duration-200 hover:border-black focus:outline-none"
+                >
+                  Clear Filters
+                </button>
+                <button
+                  onClick={() => setShowShortlist((v) => !v)}
+                  className={`px-4 py-2 rounded-full border font-semibold transition-all duration-200 focus:outline-none
+                    ${showShortlist
+                      ? 'bg-white text-black border-black font-bold hover:border-black'
+                      : 'bg-gray-100 text-gray-700 border-gray-200 hover:border-black'}
+                  `}
+                >
+                  {showShortlist ? 'Showing Favorites' : 'Show Favorites'}
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          {/* Artist Cards Section */}
+          <section className="flex-1 lg:ml-80 p-4 lg:p-8">
+            {/* Mobile & Tablet: Horizontal scroll with fixed card sizes */}
+            <div className="lg:hidden">
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide px-2">
+                {loading ? (
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0" />
+                  ))
+                ) : filteredArtists.length > 0 ? (
+                  <AnimatePresence>
+                    {filteredArtists.map((artist) => (
+                      <motion.div
+                        key={artist.id}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="h-[320px] w-[260px] min-w-[260px] max-w-[260px] flex-shrink-0"
+                      >
+                        <ArtistCard artist={artist} small />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                ) : (
+                  <div className="w-full text-center py-8">
+                    <p className="text-gray-500 dark:text-gray-400">No artists found matching your filters.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop: Responsive grid */}
+            <div className="hidden lg:grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+              {loading ? (
+                Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-[320px] w-full" />
+                ))
+              ) : filteredArtists.length > 0 ? (
+                <AnimatePresence>
+                  {filteredArtists.map((artist) => (
+                    <motion.div
+                      key={artist.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full"
+                    >
+                      <ArtistCard artist={artist} small />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              ) : (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400">No artists found matching your filters.</p>
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </motion.div>
+    </div>
   );
 }

@@ -1,19 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from "@/components/ThemeProvider";
-import { Sun, Moon, Menu } from "lucide-react";
+import { Menu, Home } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-b shadow px-6 py-4 flex justify-between items-center transition-colors relative">
+    <nav className="fixed top-0 left-0 right-0 bg-white border-b shadow px-6 py-4 flex justify-between items-center transition-colors z-50">
       <Link
         href="/"
-        className="text-xl font-bold text-primary transition-all duration-200 px-3 py-1 rounded-full hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-2xl focus:text-2xl"
+        className="text-xl font-bold text-primary transition-all duration-200 px-3 py-1 rounded-full hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-2xl focus:text-2xl flex items-center gap-2"
       >
+        <Home className="w-6 h-6" />
         Artistly
       </Link>
 

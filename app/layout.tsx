@@ -16,6 +16,32 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Artistly | Book Performing Artists",
   description: "Artistly.com - Book singers, dancers, DJs, speakers and more for your events.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Artistly | Book Performing Artists",
+    description: "Artistly.com - Book singers, dancers, DJs, speakers and more for your events.",
+    url: "https://artistly.vercel.app/",
+    siteName: "Artistly",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Artistly - Book Performing Artists",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Artistly | Book Performing Artists",
+    description: "Artistly.com - Book singers, dancers, DJs, speakers and more for your events.",
+    images: ["/images/og-image.png"],
+    creator: "@artistly",
+  },
 };
 
 export default function RootLayout({

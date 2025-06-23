@@ -15,6 +15,8 @@ const schema = yup.object().shape({
   location: yup.string().required()
 });
 
+const DEFAULT_LANGUAGES = ['Hindi', 'English', 'Punjabi'];
+
 /**
  * ArtistForm - Form for onboarding a new artist
  * @param onSuccess - callback to show success message after submit
@@ -39,6 +41,8 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
   });
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [customLanguage, setCustomLanguage] = useState('');
+  const [languageOptions, setLanguageOptions] = useState(DEFAULT_LANGUAGES);
   const { addArtist } = useArtists();
 
   // Handle image preview
@@ -67,18 +71,37 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
       else if (cat === 'Speaker') imageUrl = '/images/speaker.jpeg';
       else imageUrl = '/images/singers.jpeg';
     }
-    addArtist({
-      name: data.name,
-      category: data.category[0] || '',
-      priceRange: data.priceRange,
-      location: data.location,
-      languages: data.languages,
-      image: imageUrl,
+    
+    // Create separate cards for each category selected
+    data.category.forEach((cat: string) => {
+      addArtist({
+        name: data.name,
+        category: cat,
+        priceRange: data.priceRange,
+        location: data.location,
+        languages: data.languages,
+        image: imageUrl,
+      });
     });
+    
     reset();
     setImage(null);
     setPreview(null);
+    setCustomLanguage('');
+    setLanguageOptions(DEFAULT_LANGUAGES);
     if (onSuccess) onSuccess();
+  };
+
+  // Add custom language
+  const addCustomLanguage = () => {
+    const trimmed = customLanguage.trim();
+    if (
+      trimmed &&
+      !languageOptions.includes(trimmed)
+    ) {
+      setLanguageOptions((prev) => [...prev, trimmed]);
+      setCustomLanguage('');
+    }
   };
 
   return (
@@ -86,8 +109,8 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block font-semibold mb-1">Name</label>
-          <input id="name" {...register('name')} className="w-full border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter artist's name" />
-          {errors.name && <p className="text-red-500 text-sm mt-1">Required</p>}
+          <input id="name" {...register('name')} className="w-full border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter artist's name" aria-invalid={!!errors.name} aria-describedby="name-error" />
+          {errors.name && <p id="name-error" className="text-red-500 text-sm mt-1" role="alert">Required</p>}
         </div>
         <div>
           <label htmlFor="location" className="block font-semibold mb-1">Location</label>
@@ -97,12 +120,12 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
       </div>
       <div>
         <label htmlFor="bio" className="block font-semibold mb-1">Bio</label>
-        <textarea id="bio" {...register('bio')} className="w-full min-h-[80px] border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Write a short bio about the artist..." />
-        {errors.bio && <p className="text-red-500 text-sm mt-1">Required</p>}
+        <textarea id="bio" {...register('bio')} className="w-full min-h-[80px] border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Write a short bio about the artist..." aria-invalid={!!errors.bio} aria-describedby="bio-error" />
+        {errors.bio && <p id="bio-error" className="text-red-500 text-sm mt-1" role="alert">Required</p>}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block font-semibold mb-1">Category</label>
+          <label className="block font-semibold mb-1">Category (Select all that apply)</label>
           <Controller
             control={control}
             name="category"
@@ -126,7 +149,7 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
               </div>
             )}
           />
-          {errors.category && <p className="text-red-500 text-sm mt-1">Select at least one</p>}
+          {errors.category && <p className="text-red-500 text-sm mt-1" role="alert">Select at least one</p>}
         </div>
         <div>
           <label className="block font-semibold mb-1">Languages</label>
@@ -134,38 +157,62 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
             control={control}
             name="languages"
             render={({ field }) => (
-              <div className="flex flex-wrap gap-2">
-                {['Hindi', 'English', 'Punjabi'].map((lang) => (
-                  <label key={lang} className="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full border border-gray-300 dark:border-gray-700">
-                    <input
-                      type="checkbox"
-                      value={lang}
-                      checked={field.value.includes(lang)}
-                      onChange={(e) => {
-                        const isChecked = e.target.checked;
-                        if (isChecked) field.onChange([...field.value, lang]);
-                        else field.onChange(field.value.filter((l: string) => l !== lang));
-                      }}
-                    />
-                    <span>{lang}</span>
-                  </label>
-                ))}
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  {languageOptions.map((lang) => (
+                    <label key={lang} className="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full border border-gray-300 dark:border-gray-700">
+                      <input
+                        type="checkbox"
+                        value={lang}
+                        checked={field.value.includes(lang)}
+                        onChange={(e) => {
+                          const isChecked = e.target.checked;
+                          if (isChecked) field.onChange([...field.value, lang]);
+                          else field.onChange(field.value.filter((l: string) => l !== lang));
+                        }}
+                      />
+                      <span>{lang}</span>
+                    </label>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={customLanguage}
+                    onChange={(e) => setCustomLanguage(e.target.value)}
+                    placeholder="Add custom language..."
+                    className="flex-1 border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomLanguage())}
+                  />
+                  <button
+                    type="button"
+                    onClick={addCustomLanguage}
+                    className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+                  >
+                    Add
+                  </button>
+                </div>
+                {field.value.length > 0 && (
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                    Selected: {field.value.join(', ')}
+                  </div>
+                )}
               </div>
             )}
           />
-          {errors.languages && <p className="text-red-500 text-sm mt-1">Select at least one</p>}
+          {errors.languages && <p className="text-red-500 text-sm mt-1" role="alert">Select at least one</p>}
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="priceRange" className="block font-semibold mb-1">Fee Range</label>
-          <select id="priceRange" {...register('priceRange')} className="w-full border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+          <select id="priceRange" {...register('priceRange')} className="w-full border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" aria-invalid={!!errors.priceRange} aria-describedby="priceRange-error">
             <option value="">Select fee range</option>
             <option value="₹5,000 - ₹10,000">₹5,000 - ₹10,000</option>
             <option value="₹10,000 - ₹20,000">₹10,000 - ₹20,000</option>
             <option value="₹20,000+">₹20,000+</option>
           </select>
-          {errors.priceRange && <p className="text-red-500 text-sm mt-1">Required</p>}
+          {errors.priceRange && <p id="priceRange-error" className="text-red-500 text-sm mt-1" role="alert">Required</p>}
         </div>
         <div>
           <label htmlFor="profileImage" className="block font-semibold mb-1">Profile Image (Optional)</label>
