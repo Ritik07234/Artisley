@@ -17,6 +17,7 @@ export default function Navbar() {
       >
         Artistly
       </Link>
+
       {/* Desktop Nav */}
       <div className="hidden sm:flex items-center space-x-2 sm:space-x-4">
         <Link
@@ -37,14 +38,20 @@ export default function Navbar() {
         >
           Dashboard
         </Link>
+        {/* 🌗 Theme Toggle */}
         <button
           aria-label="Toggle theme"
           onClick={toggleTheme}
           className="ml-2 p-2 rounded transition-all duration-200 bg-gray-100 dark:bg-gray-800 hover:bg-yellow-100 dark:hover:bg-yellow-400/10 focus:outline-none focus:ring-2 focus:ring-primary"
         >
-          {theme === "dark" ? <Sun className="w-5 h-5 text-yellow-400 transition-colors" /> : <Moon className="w-5 h-5 text-gray-800 transition-colors" />}
+          {theme === "dark" ? (
+            <Sun className="w-5 h-5 text-yellow-400 transition-colors" />
+          ) : (
+            <Moon className="w-5 h-5 text-gray-800 transition-colors" />
+          )}
         </button>
       </div>
+
       {/* Mobile Nav */}
       <div className="sm:hidden flex items-center">
         <button
@@ -54,14 +61,20 @@ export default function Navbar() {
         >
           <Menu className="w-6 h-6 text-primary dark:text-white" />
         </button>
+        {/* 🌗 Theme Toggle */}
         <button
           aria-label="Toggle theme"
           onClick={toggleTheme}
           className="ml-2 p-2 rounded transition-all duration-200 bg-gray-100 dark:bg-gray-800 hover:bg-yellow-100 dark:hover:bg-yellow-400/10 focus:outline-none focus:ring-2 focus:ring-primary"
         >
-          {theme === "dark" ? <Sun className="w-5 h-5 text-yellow-400 transition-colors" /> : <Moon className="w-5 h-5 text-gray-800 transition-colors" />}
+          {theme === "dark" ? (
+            <Sun className="w-5 h-5 text-yellow-400 transition-colors" />
+          ) : (
+            <Moon className="w-5 h-5 text-gray-800 transition-colors" />
+          )}
         </button>
       </div>
+
       {/* Mobile Dropdown */}
       {menuOpen && (
         <div className="absolute top-full right-4 mt-2 w-48 bg-white dark:bg-gray-900 rounded-xl shadow-lg flex flex-col py-2 z-50 animate-fade-in">

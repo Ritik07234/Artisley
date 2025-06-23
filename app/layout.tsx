@@ -26,9 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-950 transition-colors duration-300`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300`}>
         <ThemeProvider>
           <ShortlistProvider>{children}</ShortlistProvider>
         </ThemeProvider>
