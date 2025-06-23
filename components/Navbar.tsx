@@ -2,12 +2,18 @@
 
 import Link from 'next/link';
 import { Menu, Home, Sun, Moon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from 'next-themes';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
+
+  // Prevent hydration mismatch by only rendering theme toggle after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow px-6 py-4 flex justify-between items-center transition-colors z-50">
@@ -40,13 +46,15 @@ export default function Navbar() {
           Dashboard
         </Link>
         {/* Theme Toggle Button */}
-        <button
-          aria-label="Toggle theme"
-          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-          className="ml-2 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-        >
-          {resolvedTheme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />}
-        </button>
+        {mounted && (
+          <button
+            aria-label="Toggle theme"
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className="ml-2 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            {resolvedTheme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />}
+          </button>
+        )}
       </div>
 
       {/* Mobile Nav */}
@@ -59,13 +67,15 @@ export default function Navbar() {
           <Menu className="w-6 h-6 text-primary" />
         </button>
         {/* Theme Toggle Button (Mobile) */}
-        <button
-          aria-label="Toggle theme"
-          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-          className="ml-2 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-        >
-          {resolvedTheme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />}
-        </button>
+        {mounted && (
+          <button
+            aria-label="Toggle theme"
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className="ml-2 p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            {resolvedTheme === 'dark' ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />}
+          </button>
+        )}
       </div>
 
       {/* Mobile Dropdown */}

@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
+import Image from 'next/image';
 
 const categories = [
   {
@@ -58,16 +59,18 @@ export default function HomePage() {
             <p className="text-gray-600 dark:text-white max-w-xl mx-auto">
               Connect with singers, dancers, DJs, speakers and more — directly through Artistly.com.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-              <Link href="/artists">
-                <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors block mx-auto">
-                  Explore Artists
-                </button>
+            <div className="flex flex-col sm:flex-row gap-1 justify-center mt-6">
+              <Link 
+                href="/artists"
+                className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
+              >
+                Explore Artists
               </Link>
-              <Link href="/onboard">
-                <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors block mx-auto">
-                  Join as Artist
-                </button>
+              <Link 
+                href="/onboard"
+                className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
+              >
+                Join as Artist
               </Link>
             </div>
           </section>
@@ -84,7 +87,7 @@ export default function HomePage() {
                 key={category.title}
                 className="border rounded-lg p-6 text-center shadow bg-white dark:bg-gray-700 dark:border-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-primary dark:hover:border-blue-400 cursor-pointer"
               >
-                <img
+                <Image
                   src={category.img}
                   alt={category.alt}
                   className="mx-auto mb-2 w-full h-24 object-cover object-top rounded-full border border-gray-200 dark:border-gray-600"

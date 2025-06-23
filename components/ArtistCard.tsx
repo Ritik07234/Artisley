@@ -3,6 +3,7 @@
 import { Artist } from '@/types';
 import { useShortlist } from '@/context/ShortlistContext';
 import { Heart, HeartOff } from 'lucide-react';
+import Image from 'next/image';
 
 interface ArtistCardProps {
   artist: Artist;
@@ -15,10 +16,12 @@ const ArtistCard = ({ artist, small }: ArtistCardProps) => {
   return (
     <div className={`border rounded-xl shadow bg-white dark:bg-gray-900 dark:border-gray-700 hover:shadow-lg transition-all duration-200 flex flex-col w-full h-full max-w-none relative ${small ? 'h-[320px]' : 'h-[360px]'}`}>
       <div className={`w-full flex-shrink-0 flex items-center justify-center relative ${small ? 'h-[65%]' : 'h-[60%]'}`}>
-        <img
+        <Image
           src={artist.image || (artist.category === 'Singer' ? '/images/singers.jpeg' : artist.category === 'Dancer' ? '/images/dancers.jpeg' : artist.category === 'DJ' ? '/images/djs.jpeg' : '/images/speaker.jpeg')}
           alt={artist.name + ' profile'}
           className={`object-cover object-top rounded-full border-4 border-white dark:border-gray-900 ${small ? 'w-20 h-20 mt-2' : 'w-28 h-28 mt-2'} shadow-md`}
+          height={small ? 80 : 112}
+          width={small ? 80 : 112}
           loading="lazy"
         />
         <button

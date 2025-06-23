@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useArtists } from '@/context/ArtistsContext';
+import Image from 'next/image';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -16,6 +17,15 @@ const schema = yup.object().shape({
 });
 
 const DEFAULT_LANGUAGES = ['Hindi', 'English', 'Punjabi'];
+
+type ArtistFormData = {
+  name: string;
+  bio: string;
+  category: string[];
+  languages: string[];
+  priceRange: string;
+  location: string;
+};
 
 /**
  * ArtistForm - Form for onboarding a new artist
@@ -59,7 +69,7 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
   };
 
   // Handle form submit
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: ArtistFormData) => {
     let imageUrl = '';
     if (image) {
       imageUrl = URL.createObjectURL(image);
@@ -218,7 +228,7 @@ export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
           <label htmlFor="profileImage" className="block font-semibold mb-1">Profile Image (Optional)</label>
           <input id="profileImage" type="file" className="w-full border rounded px-3 py-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary" onChange={handleImageChange} />
           {preview && (
-            <img src={preview} alt="Profile Preview" className="mt-2 w-24 h-24 object-cover rounded-full border" />
+            <Image src={preview} alt="Profile Preview" className="mt-2 w-24 h-24 object-cover rounded-full border" width={96} height={96} />
           )}
         </div>
       </div>
