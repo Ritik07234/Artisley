@@ -21,11 +21,11 @@ export default function FilterBlock({
           <button
             key={option}
             onClick={() => onChange(option)}
-            className={`px-3 py-1 rounded-full text-sm border ${
-              selected.includes(option)
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 text-gray-700'
-            }`}
+            className={`px-3 py-1 rounded-full text-sm border transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary
+              ${selected.includes(option)
+                ? 'bg-primary text-white dark:bg-yellow-400 dark:text-black border-primary dark:border-yellow-400 ring-2 ring-primary dark:ring-yellow-400'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-700'}
+            `}
           >
             {option}
           </button>

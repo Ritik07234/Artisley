@@ -5,4 +5,5 @@ export interface Artist {
   priceRange: string;
   location: string;
   languages: string[];
+  image?: string;
 }

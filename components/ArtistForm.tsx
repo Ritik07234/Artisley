@@ -3,6 +3,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -13,7 +14,11 @@ const schema = yup.object().shape({
   location: yup.string().required()
 });
 
-export default function ArtistForm() {
+/**
+ * ArtistForm - Form for onboarding a new artist
+ * @param onSuccess - callback to show success message after submit
+ */
+export default function ArtistForm({ onSuccess }: { onSuccess?: () => void }) {
   const {
     register,
     handleSubmit,
@@ -30,22 +35,39 @@ export default function ArtistForm() {
       location: ''
     }
   });
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
+  // Handle image preview
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(null);
+    }
+  };
+
+  // Handle form submit
   const onSubmit = (data: any) => {
-    console.log('Artist Submitted:', data);
+    console.log('Artist Submitted:', { ...data, image });
+    if (onSuccess) onSuccess();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6">
       <div>
-        <label>Name</label>
-        <input {...register('name')} className="input" />
+        <label htmlFor="name">Name</label>
+        <input id="name" {...register('name')} className="input" />
         {errors.name && <p className="text-red-500 text-sm">Required</p>}
       </div>
 
       <div>
-        <label>Bio</label>
-        <textarea {...register('bio')} className="input" />
+        <label htmlFor="bio">Bio</label>
+        <textarea id="bio" {...register('bio')} className="input" />
         {errors.bio && <p className="text-red-500 text-sm">Required</p>}
       </div>
 
@@ -55,9 +77,9 @@ export default function ArtistForm() {
           control={control}
           name="category"
           render={({ field }) => (
-            <>
+            <div className="flex flex-wrap gap-2">
               {['Singer', 'Dancer', 'Speaker', 'DJ'].map((cat) => (
-                <label key={cat} className="block">
+                <label key={cat} className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     value={cat}
@@ -65,13 +87,13 @@ export default function ArtistForm() {
                     onChange={(e) => {
                       const isChecked = e.target.checked;
                       if (isChecked) field.onChange([...field.value, cat]);
-                      else field.onChange(field.value.filter((c) => c !== cat));
+                      else field.onChange(field.value.filter((c: string) => c !== cat));
                     }}
                   />
-                  <span className="ml-2">{cat}</span>
+                  <span>{cat}</span>
                 </label>
               ))}
-            </>
+            </div>
           )}
         />
         {errors.category && <p className="text-red-500 text-sm">Select at least one</p>}
@@ -83,9 +105,9 @@ export default function ArtistForm() {
           control={control}
           name="languages"
           render={({ field }) => (
-            <>
+            <div className="flex flex-wrap gap-2">
               {['Hindi', 'English', 'Punjabi'].map((lang) => (
-                <label key={lang} className="block">
+                <label key={lang} className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     value={lang}
@@ -93,21 +115,21 @@ export default function ArtistForm() {
                     onChange={(e) => {
                       const isChecked = e.target.checked;
                       if (isChecked) field.onChange([...field.value, lang]);
-                      else field.onChange(field.value.filter((l) => l !== lang));
+                      else field.onChange(field.value.filter((l: string) => l !== lang));
                     }}
                   />
-                  <span className="ml-2">{lang}</span>
+                  <span>{lang}</span>
                 </label>
               ))}
-            </>
+            </div>
           )}
         />
         {errors.languages && <p className="text-red-500 text-sm">Select at least one</p>}
       </div>
 
       <div>
-        <label>Fee Range</label>
-        <select {...register('priceRange')} className="input">
+        <label htmlFor="priceRange">Fee Range</label>
+        <select id="priceRange" {...register('priceRange')} className="input">
           <option value="">Select</option>
           <option value="₹5,000 - ₹10,000">₹5,000 - ₹10,000</option>
           <option value="₹10,000 - ₹20,000">₹10,000 - ₹20,000</option>
@@ -117,14 +139,17 @@ export default function ArtistForm() {
       </div>
 
       <div>
-        <label>Location</label>
-        <input {...register('location')} className="input" />
+        <label htmlFor="location">Location</label>
+        <input id="location" {...register('location')} className="input" />
         {errors.location && <p className="text-red-500 text-sm">Required</p>}
       </div>
 
       <div>
-        <label>Upload Profile Image (Optional)</label>
-        <input type="file" className="input" />
+        <label htmlFor="profileImage">Upload Profile Image (Optional)</label>
+        <input id="profileImage" type="file" className="input" onChange={handleImageChange} />
+        {preview && (
+          <img src={preview} alt="Profile Preview" className="mt-2 w-24 h-24 object-cover rounded border" />
+        )}
       </div>
 
       <button type="submit" className="bg-primary text-white px-4 py-2 rounded">

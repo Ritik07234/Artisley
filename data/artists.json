@@ -5,7 +5,8 @@
     "category": "Singer",
     "priceRange": "₹10,000 - ₹20,000",
     "location": "Mumbai",
-    "languages": ["Hindi", "English"]
+    "languages": ["Hindi", "English"],
+    "image": "/images/singers.jpeg"
   },
   {
     "id": 2,
@@ -13,6 +14,43 @@
     "category": "Dancer",
     "priceRange": "₹8,000 - ₹15,000",
     "location": "Delhi",
-    "languages": ["Hindi"]
+    "languages": ["Hindi"],
+    "image": "/images/dancers.jpeg"
+  },
+  {
+    "id": 3,
+    "name": "Rahul Verma",
+    "category": "DJ",
+    "priceRange": "₹12,000 - ₹18,000",
+    "location": "Bangalore",
+    "languages": ["English", "Kannada"],
+    "image": "/images/djs.jpeg"
+  },
+  {
+    "id": 4,
+    "name": "Priya Singh",
+    "category": "Speaker",
+    "priceRange": "₹5,000 - ₹10,000",
+    "location": "Mumbai",
+    "languages": ["Hindi", "English"],
+    "image": "/images/speaker.jpeg"
+  },
+  {
+    "id": 5,
+    "name": "Kabir Sharma",
+    "category": "Singer",
+    "priceRange": "₹15,000 - ₹25,000",
+    "location": "Delhi",
+    "languages": ["Hindi", "Punjabi"],
+    "image": "/images/singers.jpeg"
+  },
+  {
+    "id": 6,
+    "name": "Meera Nair",
+    "category": "Dancer",
+    "priceRange": "₹7,000 - ₹12,000",
+    "location": "Bangalore",
+    "languages": ["Malayalam", "English"],
+    "image": "/images/dancers.jpeg"
   }
 ]
