@@ -51,8 +51,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="color-scheme" content="light dark" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (!theme || theme === 'system') {
+                    localStorage.setItem('theme', 'light');
+                    document.documentElement.classList.remove('dark');
+                  } else if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white`}
       >
         <Providers>{children}</Providers>
       </body>
