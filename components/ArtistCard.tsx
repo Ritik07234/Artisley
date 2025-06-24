@@ -33,11 +33,11 @@ const ArtistCard = ({ artist, small }: ArtistCardProps) => {
         </button>
       </div>
       <div className={`flex flex-col items-center justify-center flex-1 py-2 px-2 ${small ? 'h-[35%]' : 'h-[40%]'}`}>
-        <h2 className={`text-center font-semibold dark:text-white ${small ? 'text-sm' : 'text-base'} mb-1`}>{artist.name}</h2>
-        <p className={`text-center ${small ? 'text-xs' : 'text-sm'} text-gray-500 dark:text-gray-300 mb-1`}>{artist.category}</p>
-        <p className={`text-center ${small ? 'text-xs' : 'text-sm'} text-gray-600 dark:text-gray-400 mb-1`}>{artist.location}</p>
-        <p className={`text-center ${small ? 'text-xs' : 'text-sm'} text-gray-600 dark:text-gray-400 mb-1`}>{artist.priceRange}</p>
-        <p className={`text-center ${small ? 'text-xs' : 'text-sm'} text-gray-500 dark:text-gray-300 mb-2`}>{artist.languages && artist.languages.length > 0 ? artist.languages.join(', ') : ''}</p>
+        <h2 className={`text-center font-semibold text-black dark:text-white ${small ? 'text-sm' : 'text-base'} mb-1`}>{artist.name}</h2>
+        <p className={`text-center text-black dark:text-gray-300 ${small ? 'text-xs' : 'text-sm'} mb-1`}>{artist.category}</p>
+        <p className={`text-center text-black dark:text-gray-400 ${small ? 'text-xs' : 'text-sm'} mb-1`}>{artist.location}</p>
+        <p className={`text-center text-black dark:text-gray-400 ${small ? 'text-xs' : 'text-sm'} mb-1`}>{artist.priceRange}</p>
+        <p className={`text-center text-black dark:text-gray-300 ${small ? 'text-xs' : 'text-sm'} mb-2`}>{artist.languages && artist.languages.length > 0 ? artist.languages.join(', ') : ''}</p>
         <button className={`px-3 py-1 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200 ${small ? 'text-xs' : 'text-sm'}`}>
           Ask for Quote
         </button>

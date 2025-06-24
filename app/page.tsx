@@ -35,7 +35,7 @@ const categories = [
  */
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-800">
+    <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
       <Head>
         <title>Artistly | Book Performing Artists</title>
         <meta name="description" content="Book singers, dancers, DJs, speakers and more for your events. Artistly.com is a platform for event planners and artist managers to connect." />
@@ -52,31 +52,31 @@ export default function HomePage() {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
         <main className="pt-20 max-w-7xl mx-auto px-4 py-12">
           {/* Hero Section */}
-          <section className="text-center mb-6">
-            <h1 className="text-4xl font-bold mb-4 text-primary dark:text-white">
+          <section className="text-center mb-6 bg-white text-black dark:bg-gray-900 dark:text-white">
+            <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">
               Book Verified Performing Artists for Your Events
             </h1>
-            <p className="text-gray-600 dark:text-white max-w-xl mx-auto">
+            <p className="text-gray-600 text-black dark:text-white max-w-xl mx-auto">
               Connect with singers, dancers, DJs, speakers and more — directly through Artistly.com.
             </p>
             <div className="flex flex-col sm:flex-row gap-1 justify-center mt-6">
               <Link 
                 href="/artists"
-                className="bg-blue-500 text-black dark:bg-blue-500 dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-black dark:hover:text-black transition-colors text-center"
+                className="bg-blue-500 text-black dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
               >
                 Explore Artists
               </Link>
               <Link 
                 href="/onboard"
-                className="bg-blue-500 text-black dark:bg-blue-500 dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-black dark:hover:text-black transition-colors text-center"
+                className="bg-blue-500 text-black dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
               >
                 Join as Artist
               </Link>
             </div>
           </section>
           {/* Platform Overview */}
-          <section className="text-center mb-12">
-            <p className="text-base text-gray-700 dark:text-white max-w-2xl mx-auto">
+          <section className="text-center mb-12 bg-white text-black dark:bg-gray-900 dark:text-white">
+            <p className="text-base text-black dark:text-white max-w-2xl mx-auto">
               Artistly.com is a platform for event planners and artist managers to connect. Browse verified artist profiles, filter by category, location, or price, and send booking requests directly. Artist managers can onboard new talent and manage leads with ease.
             </p>
           </section>
@@ -85,7 +85,7 @@ export default function HomePage() {
             {categories.map((category) => (
               <div
                 key={category.title}
-                className="border rounded-lg p-6 text-center shadow bg-white dark:bg-gray-700 dark:border-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-primary dark:hover:border-blue-400 cursor-pointer"
+                className="border rounded-lg p-6 text-center shadow bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-primary dark:hover:border-blue-400 cursor-pointer"
               >
                 <Image
                   src={category.img}
@@ -95,7 +95,7 @@ export default function HomePage() {
                   width={96}
                   loading="lazy"
                 />
-                <h2 className="text-lg font-semibold dark:text-white mt-2">{category.title}</h2>
+                <h2 className="text-lg font-semibold text-black dark:text-white mt-2">{category.title}</h2>
               </div>
             ))}
           </section>

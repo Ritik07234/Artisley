@@ -80,12 +80,12 @@ export default function ArtistListingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-800">
+    <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col">
         <Navbar />
         <main className="pt-20 flex-1 flex flex-col lg:flex-row">
           {/* Filter Sidebar */}
-          <aside className="w-full lg:w-80 lg:fixed lg:top-20 lg:left-0 lg:h-[calc(100vh-80px)] lg:overflow-y-auto bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm lg:border-r lg:border-gray-200 dark:lg:border-gray-600 p-4 lg:p-6 z-20">
+          <aside className="w-full lg:w-80 lg:fixed lg:top-20 lg:left-0 lg:h-[calc(100vh-80px)] lg:overflow-y-auto bg-white text-black dark:bg-gray-700 dark:text-white backdrop-blur-sm lg:border-r lg:border-gray-200 dark:lg:border-gray-600 p-4 lg:p-6 z-20">
             <div className="space-y-6">
               <FilterBlock
                 title="Category"

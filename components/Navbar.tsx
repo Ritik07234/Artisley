@@ -16,10 +16,10 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow px-6 py-4 flex justify-between items-center transition-colors z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-white text-black dark:bg-gray-800 dark:text-white border-b border-gray-200 dark:border-gray-700 shadow px-6 py-4 flex justify-between items-center transition-colors z-50">
       <Link
         href="/"
-        className="text-xl font-bold text-primary transition-all duration-200 px-3 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-2xl focus:text-2xl flex items-center gap-2"
+        className="text-xl font-bold text-primary transition-all duration-200 px-3 py-1 rounded-full hover:bg-black hover:text-white dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary hover:text-2xl focus:text-2xl flex items-center gap-2"
       >
         <Home className="w-6 h-6" />
         Artistly
@@ -29,19 +29,19 @@ export default function Navbar() {
       <div className="hidden sm:flex items-center space-x-2 sm:space-x-4">
         <Link
           href="/artists"
-          className="relative text-gray-700 dark:text-gray-300 transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
+          className="relative text-primary dark:text-primary transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-black hover:text-white dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
         >
           Explore Artists
         </Link>
         <Link
           href="/onboard"
-          className="relative text-gray-700 dark:text-gray-300 transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
+          className="relative text-primary dark:text-primary transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-black hover:text-white dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
         >
           Onboard Artist
         </Link>
         <Link
           href="/dashboard"
-          className="relative text-gray-700 dark:text-gray-300 transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
+          className="relative text-primary dark:text-primary transition-all duration-200 px-3 py-1 rounded-full text-base font-medium hover:bg-black hover:text-white dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary hover:text-lg focus:text-lg"
         >
           Dashboard
         </Link>

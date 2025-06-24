@@ -38,10 +38,10 @@ export default function DashboardTable({ artists }: Props) {
       <tbody>
         {rows.map((a, idx) => (
           <tr key={a.id} className={`border-t ${idx === 0 ? 'bg-white dark:bg-gray-900 dark:text-white' : 'bg-white dark:bg-gray-900 dark:text-white'}`}>
-            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.name}</td>
-            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.category}</td>
-            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.location}</td>
-            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">{a.priceRange}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle text-black dark:text-white">{a.name}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle text-black dark:text-white">{a.category}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle text-black dark:text-white">{a.location}</td>
+            <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle text-black dark:text-white">{a.priceRange}</td>
             <td className="px-2 md:px-6 py-2 md:py-3 text-center align-middle">
               <button className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">View</button>
               <button
