@@ -7,12 +7,7 @@ import { ArtistsProvider } from '@/context/ArtistsContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider 
-      attribute="class" 
-      defaultTheme="light" 
-      enableSystem={false}
-      disableTransitionOnChange={false}
-    >
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <ArtistsProvider>
         <ShortlistProvider>{children}</ShortlistProvider>
       </ArtistsProvider>

@@ -62,13 +62,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-1 justify-center mt-6">
               <Link 
                 href="/artists"
-                className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
+                className="bg-blue-500 text-black dark:bg-blue-500 dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-black dark:hover:text-black transition-colors text-center"
               >
                 Explore Artists
               </Link>
               <Link 
                 href="/onboard"
-                className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors text-center"
+                className="bg-blue-500 text-black dark:bg-blue-500 dark:text-black px-6 py-2 rounded-full font-semibold hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-black dark:hover:text-black transition-colors text-center"
               >
                 Join as Artist
               </Link>
